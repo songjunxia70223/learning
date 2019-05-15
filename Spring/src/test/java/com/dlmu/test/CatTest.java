@@ -1,7 +1,7 @@
 package com.dlmu.test;
 
 import com.dlmu.song.autobean.Cat;
-import com.dlmu.song.autobean.SpringConfiguration;
+import com.dlmu.song.SpringConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
