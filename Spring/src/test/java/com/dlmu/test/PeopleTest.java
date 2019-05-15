@@ -1,18 +1,12 @@
 package com.dlmu.test;
 
-import com.dlmu.song.SpringConfiguration;
 import com.dlmu.song.manual.Chinese;
 import com.dlmu.song.manual.Japanese;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = SpringConfiguration.class)
-@ExtendWith(SpringExtension.class)
-public class PeopleTest {
+public class PeopleTest extends Junit {
     @Autowired
     Chinese chi;
     @Autowired
