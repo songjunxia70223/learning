@@ -72,7 +72,7 @@ Spring的目的就是简化开发,是为了让java写程序变得更简单而不
 
 ![1557843668929](./assets/1557843668929.png)
 
-package就是java用来整理各个class的目录而已,比如说你在com>dlmu>song下创建了一个Cat.java,那么Cat的package就是com.dlmu.song,如果你要在别的地方引用Cat.java,就需要用import导入,导入的方法就是import com.dlmu.song.autobean.Cat;
+package就是java用来整理各个class的目录而已,比如说你在com>dlmu>song下创建了一个Cat.java,那么Cat的package就是com.dlmu.song,如果你要在别的地方引用Cat.java,就需要用import导入,导入的方法就是import com.dlmu.song.Cat;
 
 3. 切换回pom.xml,该文件告诉maven这个项目都依赖哪些第三方的包(这里的包就是指别人写好的***.java,然后可以把多个.java打包成.jar格式的文件),现在要学的是Spring,所以我们就需要在pom.xml里添加Spring的包,从百度上搜maven repository,在里面找spring context.
 
