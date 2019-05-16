@@ -5,9 +5,11 @@ import com.dlmu.song.manual.Japanese;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
 @ComponentScan(basePackages = "com.dlmu.song")
+@EnableAspectJAutoProxy
 public class SpringConfiguration {
     @Bean
     public Chinese getChinese(){
