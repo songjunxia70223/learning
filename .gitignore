@@ -1,4 +1,4 @@
-Spring/.idea
-Spring/target
-Spring/Spring.iml
+*/.idea
+*/target
+*/*.iml
 song.sh
