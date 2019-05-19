@@ -5,4 +5,10 @@
 1. [Spring的基本使用](./Spring/1_spring.md)
 2. [多个Bean的手动装配和自动装配](./Spring/2_bean.md)
 3. [Spring Aop的使用](./Spring/3_aop.md)
+4. [使用反射获取注解信息](./Spring/4_annotation.md)
+5. [利用mybatis操作数据库的基本使用](./Spring/5_mybatis.md)
+
+## SpringBoot
+
+1. [SpringBoot中使用Mybatis](./SpringBoot/1_springboot_mybatis.md)
 
