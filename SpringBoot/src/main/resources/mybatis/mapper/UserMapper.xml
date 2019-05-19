@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dlmu.song.mapper.UserMapper">
+    <resultMap id="userMap" type="User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getAllUser" resultMap="userMap">
+        SELECT *
+        FROM USER
+    </select>
+    <select id="getUserById" resultMap="userMap" parameterType="Integer">
+        SELECT *
+        FROM USER
+        WHERE ID = #{id}
+    </select>
+    <insert id="insertUser" parameterType="User">
+        INSERT INTO USER(name, password)
+        VALUES (#{name}, #{password})
+    </insert>
+    <update id="updateUser" parameterType="User">
+        UPDATE user
+        SET
+        <if test="name != null">name=#{name},</if>
+        <if test="password != null">password=#{password},</if>
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteUserById" parameterType="Integer">
+        DELETE
+        FROM user
+        WHERE ID = #{id}
+    </delete>
+    <delete id="deleteAllUser">
+        DELETE FROM USER
+    </delete>
+</mapper>
