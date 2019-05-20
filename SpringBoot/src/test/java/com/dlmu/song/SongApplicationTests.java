@@ -19,11 +19,11 @@ public class SongApplicationTests {
         User user1 = new User();
         User user2 = new User();
         User user3 = new User();
-        user1.setName("ted");
+        user1.setUserName("ted");
         user1.setPassword("123ili");
-        user2.setName("job");
+        user2.setUserName("job");
         user2.setPassword("llk");
-        user3.setName("jola");
+        user3.setUserName("jola");
         user3.setPassword("lknaa");
         userMapper.insertUser(user1);
         userMapper.insertUser(user2);
@@ -33,7 +33,7 @@ public class SongApplicationTests {
 
     @Test
     public void getUserTest() {
-        Assert.assertEquals("ted", userMapper.getUserById(1).getName());
+        Assert.assertEquals("ted", userMapper.getUserById(1).getUserName());
     }
 
     @Test
