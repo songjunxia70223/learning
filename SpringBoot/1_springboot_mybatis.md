@@ -2,6 +2,18 @@
 
 # SpringBoot
 
+*简单介绍下*
+
+SpringBoot的核心思想是约定大于配置,也就是说你只要按它约定俗成的一些东西,就可以很方便的简化很多配置上的东西.
+
+Spring Boot实现了自动配置，降低了项目搭建的复杂度。
+
+Spring框架需要进行大量的配置，Spring Boot引入自动配置的概念，根据它约定俗成可以减少很多配置上的东西.
+
+而我们要写的是SpringMvc程序,SpringMvc是对Servlet的封装,Servlet就相当于之前学过的ASP.NET,而SpringMvc则是相当于我们用ASP.NET写了一套模板,后面再用的话只需要调用这个模板里的方法就可以了.
+
+SpringMvc就是根据MVC设计模式然后利用Servlet写的这样一个模板,而通过SpringBoot我们可以减少很多SpringMvc配置上的东西.
+
 ## 创建项目
 
 首先创建新项目吧,打开IDEA>New Project>Spring Initializr
@@ -31,7 +43,7 @@
 spring.datasource.url=jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true
 spring.datasource.username=root
 spring.datasource.password=ilikeshe2
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.driver-class-userName=com.mysql.cj.jdbc.Driver
 
 # thymeleaf
 spring.thymeleaf.cache=false
@@ -56,25 +68,28 @@ spring.thymeleaf.encoding=UTF-8
 ```java
 public class Mybatis {
     private int id;
-    private String name;
+    private String userName;
     private int age;
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
+    public String getName() {return userName;}
+    public void setName(String userName) {this.userName = userName;}
     public int getAge() {return age;}
     public void setAge(int age) {this.age = age;}
 }
 ```
 
-在mapper里编写mapper
+在mapper包里新建一个接口类MybatisMapper
 
 ```java
+@Repository
 public interface MybatisMapper {
     @Select("select * from mybatis")
     List<Mybatis> getAllMybatis();
 }
 ```
+
+@Repository这个注解继承了@Component,算是一个语义化的@Component,就像@Configuration一样,语义化更强,但实际的作用都是一样的,都是让Spring容器帮我们管理该Bean...理解上就是这是一个仓库,我们可以从这个仓库里拿数据,比起单纯的打个@Component注解更容易让别人理解~
 
 这样就完成了~是不是比昨天的简单很多呢?
 
@@ -95,7 +110,7 @@ mybatisMapper上有个错误提示,不去管它...
 ```mysql
 create table user(
 id int auto_increment primary key,
-name varchar(255),
+userName varchar(255),
 password varchar(255)
 );
 ```
@@ -105,7 +120,7 @@ password varchar(255)
 ```java
 public class User {
     private int id;
-    private String name;
+    private String userName;
     private String password;
     //省略setter和getter
 }
@@ -116,6 +131,7 @@ public class User {
 我们先在mapper包下编写的mapper接口如下
 
 ```java
+@Repository
 public interface UserMapper {
     List<User> getAllUser();
 
@@ -151,7 +167,7 @@ public interface UserMapper {
 </configuration>
 ```
 
-这是一个mybatis的配置文件,其中typeAlias根据字面意思理解就是别名,给java.lang.Integer起了个别名叫Integer,在之后使用的时候就不需要输入全名了.
+这是一个mybatis的配置文件,其中typeAlias根据字面意思理解就是别名,给com.dlmu.song.model.User起了个别名叫User,在之后使用的时候就不需要输入包名了.
 
 然后在mybatis包下创建一个mapper包,在其中创建一个UserMapper.xml,内容如下
 
@@ -166,10 +182,10 @@ public interface UserMapper {
 	-->
     <resultMap id="userMap" type="User">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
     </resultMap>
-    <!-- 利用select标签可以在里面写查询语句,id的值就是刚才写的UserMapper.java里的方法名字,目前这些都是		单表映射查询,resultMap的值就是刚才写的resultMap标签里的id,表示要使用我们自定义的映射关系 -->
+    <!-- 利用select标签可以在里面写查询语句,id的值对应的UserMapper.java里的方法名字,目前这些都是		单表映射查询,resultMap的值就是刚才写的resultMap标签里的id,表示要使用我们自定义的映射关系 -->
     <select id="getAllUser" resultMap="userMap">
         SELECT *
         FROM USER
@@ -182,14 +198,14 @@ public interface UserMapper {
     </select>
     <!-- 因为我们配置了alias,所以不需要写User的全路径com.dlmu.song.model.User -->
     <insert id="insertUser" parameterType="User">
-        INSERT INTO USER(name, password)
-        VALUES (#{name}, #{password})
+        INSERT INTO USER(userName, password)
+        VALUES (#{userName}, #{password})
     </insert>
     <update id="updateUser" parameterType="User">
         UPDATE user
         SET
         <!-- 用if标签可以测试是否要添加该sql语句的字符串,记得末尾加逗号,就跟平常写sql语句是一样的 -->
-        <if test="name != null">name=#{name},</if>
+        <if test="userName != null">userName=#{userName},</if>
         <if test="password != null">password=#{password},</if>
         WHERE id = #{id}
     </update>
@@ -204,7 +220,7 @@ public interface UserMapper {
 </mapper>
 ```
 
-嗯看着很复杂的样子,先复制粘贴吧~
+根据不同的标签写不同的SQL语句,Mybatis会根据这些标签来处理映射和数据查询,你可以先只写一个查询之类的试试看~
 
 在application.properties里增加mybatis的配置搜索~
 
@@ -258,3 +274,5 @@ public class SongApplicationTests {
 运行测试三个都通过了~证明我们用xml写的sql语句成功映射了,今天就写这些吧~明天开始写控制器,将获取到的数据response到页面上~
 
 Mybatis还有别的用法很多很多...具体的在随后慢慢添加吧~还是很简单的,属于记忆性的东西...用一两次就能记住了~
+
+下一篇开始写Thymeleaf
