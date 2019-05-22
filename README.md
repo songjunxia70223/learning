@@ -11,4 +11,5 @@
 ## SpringBoot
 
 1. [SpringBoot中使用Mybatis](./SpringBoot/1_springboot_mybatis.md)
+2. [SpringBoot编写前端](./SpringBoot/2_springboot_thymeleaf.md)
 

@@ -65,13 +65,13 @@ public class UserController {
 
 然后我们在resources/templates下创建user包,在里面创建三个页面,分别为list.html,userAdd.html,userEdit.html,对应以上代码请求访问的三个页面名称.
 
-static目录下的bootstrap.css是前端的一个css库...百度就有这个文件,你也可以从该github上找到这个文件,点击raw然后右键保存网页放到这里.![1558358391726](assets/1558358391726.png)
-
-![1558358412840](assets/1558358412840.png)
-
 现在我们的工程目录如下
 
 ![1558358290073](assets/1558358290073.png)
+
+static目录下的bootstrap.css是前端的一个css库...百度就有这个文件,你也可以从该github上找到这个文件,点击raw然后右键保存网页放到这里,不添加也没什么影响,单纯为了页面好看点而已.![1558358391726](assets/1558358391726.png)
+
+![1558358412840](assets/1558358412840.png)
 
 我们再编写list.html中的内容
 
