@@ -9,7 +9,7 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        int time = 0;
+        Integer time;
         do {
             synchronized (queue) {
                 while (queue.size() == 0) {
@@ -21,10 +21,10 @@ public class Consumer implements Runnable {
                     }
                 }
                 System.out.println("Consumer get the lock");
-                time = queue.remove();
+                time = queue.poll();
                 System.out.println("Consumer get the resources int is " + time);
                 queue.notifyAll();
             }
-        } while (time < 20);
+        } while (time != null && time < 20);
     }
 }
