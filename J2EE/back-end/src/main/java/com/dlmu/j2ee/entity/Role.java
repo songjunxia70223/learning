@@ -4,20 +4,18 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
 @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-public class User {
+public class Role {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @Column(length = 36, name = "user_id")
+    @Column(length = 36, name = "role_id")
     private String id;
-    private String name;
     @Column(unique = true)
-    private String email;
-    private String password;
-    private String salt;
-    @OneToOne
-    private Role role;
+    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Permission> permission;
 }

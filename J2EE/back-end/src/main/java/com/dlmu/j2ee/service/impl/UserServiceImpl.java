@@ -22,22 +22,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByName(String name) {
-        return userRepository.findByNameLike(name);
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public void insertUser(User user) {
+    public void createUser(User user) {
         userRepository.save(user);
     }
 
     @Override
-    public void deleteById(String id) {
-        userRepository.deleteById(id);
+    public boolean updateUser(User user) {
+        if (userRepository.findById(user.getId()).isPresent()) {
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    @Override
-    public void updateUser(User user) {
-        userRepository.save(user);
-    }
 }
