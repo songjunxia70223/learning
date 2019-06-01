@@ -42,6 +42,7 @@ spring.jpa.show-sql=true
 现在编写个User实体.
 
 ```java
+//声明该类为实体类,即对应数据库中的table..学数据库的时候所谓的实体关系模型就是Entity-Relationship-model,这里的entity就是所谓的数据库中的实体了
 @Entity
 //自动生成数据的策略,strategy是指使用什么方式,比如自增长1,或者我现在用的使用hibernate提供的id生成算法
 //name跟下面的generator对应就ok
@@ -241,3 +242,73 @@ send后发现成功返回了我们的张三~我们再根据这个id把张三删�
 
 接下来我要编写其他内容了,比如密码加密,权限管理之类的~会每步详细说明的...不过可能我会删掉一些写好的代码...不过你都可以从commit历史中看到我写过的代码...歇会再写...一个周末应该能把前后端都写完..毕竟下周交作业..我还得准备考四级和高数...哭唧唧......
 
+
+
+## 总结
+
+说明下Spring data JPA吧...
+
+JPA是一个规范性质的接口,全称Java Persistence API,是SUN公司(发布java的公司)提供的规范,第三方框架开发者可以根据这一系列接口的要求来进行底层实现.
+
+之前也大致了解了面向接口编程...好处就是开发者不需要知道底层实现是什么,只需要使用这些实现公共的接口就可以使用了...比如说连接数据库的接口,定义这样一个接口
+
+```java
+public interface SqlConnection{
+    void connect();
+    void close();
+}
+```
+
+而不同的数据库比如MySql,SQLServer,Oracle,Redis,MongoDB,使用java连接它们的方式是不一样的.
+
+所以框架开发者可以在底层根据不同的数据库来编写不同的实现.
+
+最终使用的时候不管你连接的是MySql,还是SQLServer,还是Redis,都只需要使用SqlConnection接口中的那两个方法就可以了,只要你告诉框架开发者你使用的是哪个数据库就可以了...
+
+在之前的配置里我们不是配置过Dialect么?就相当于是这个作用了.
+
+然后是Spring data JPA,就是spring和JPA的一个整合,spring默认底层使用的是Hibernate,现在java最流行的两个ORM框架就是Hibernate和Mybatis了,Mybatis在之前已经有所了解过了.
+
+Mybatis可以根据表来自动生成简单的增删改查Mapper
+
+而Spring data JPA则是根据Java类来生成表.
+
+Mybatis需要手动编写SQL语句,如果你对SQL语句熟悉的话,可能Mybatis上手会更快,而SpringDataJPA则需要你再记一些接口和规范,反之不需要编写SQL语句.
+
+比如我们之前继承了JpaRepository的仓库,里面的方法名称是有规范的,JPA底层有个实现是解析方法名称,然后将方法名称生成为SQL语句...这里列出一些常见的规范吧
+
+| 关键字            | 示例                                                    | SQL表达                                   |
+| ----------------- | :------------------------------------------------------ | ----------------------------------------- |
+| And               | findByLastnameAndFirstname                              | ...Where x.lastname=? and x.firstname=?   |
+| Or                | findByLastnameOrFirstname                               | ...where x.lastname=? or x.firstname=?    |
+| Is,Equals         | findByFirstname,findByFirstnameIs,findByFirstnameEquals | ...where x.firstname=?                    |
+| Between           | findByStartDateBetween                                  | ...where x.startDate between ? and ?      |
+| LessThen          | findByAgeLessThan                                       | ...where x.age<?                          |
+| LessThanEqual     | findByAgeLessThanEqual                                  | ...where x.age<=?                         |
+| GreaterThan       | ...                                                     | ...                                       |
+| GreaterThanEqual  | ...                                                     | ...                                       |
+| After             | findByDateAfter                                         | ...where x.date>?                         |
+| Before            | findByDateBefore                                        | ...where x.date<?                         |
+| IsNull            | findByAgeIsNull                                         | ...where x.age is null                    |
+| IsNotNull,NotNull | findByAgeNotNull                                        | ...where x.age not null                   |
+| Like              | findByNameLike                                          | ...where x.name like ?                    |
+| NotLike           | findByNameNotLike                                       | ...where x.name not like?                 |
+| StartingWith      | findByNameStartingWith                                  | 参考like,参数前被通配符%包裹              |
+| EndingWith        | findByNameStartingWith                                  | 参考like,参数后被通配符%包裹              |
+| Containing        | findByFirstnameContaining                               | 参考like,参数前后被通配符%包裹            |
+| OrderBy           | findByAgeOrderByLastnameDesc                            | ...where x.age=? order by x.lastname desc |
+| Not               | findByAgeNot                                            | ...where x.age <> ?                       |
+| In                | ...                                                     | ...                                       |
+| NotIn             | findByAgeNotIn(Collection<Age> ages)                    | ...where x.age not in ?                   |
+| True              | findByActiveTrue                                        | ...where x.active = true                  |
+| Flase             | findByActiveFalse                                       | ...where x.active = false                 |
+
+基本上常见的查询方法都有,同时也支持分页查询,在以后用到了再写吧...
+
+只要根据这些命名规范在Repository里编写方法名,然后就可以在Service中使用Repository中的方法来对数据库进行操作了...
+
+默认的有几个实现,应该是save(),findById().其中findById()返回的是一个optional容器...这个容器写完这个项目会介绍一下,还有java的lambda编程...
+
+不过总之...这些只不过是记忆性的东西,需要自己手动敲了,然后亲自看看效果,才能有更好的记忆,并没有什么难度上的东西...不过写这些总比写测试有趣些...
+
+并没有什么难度...如果能看到这里...希望坚持看下去吧~
