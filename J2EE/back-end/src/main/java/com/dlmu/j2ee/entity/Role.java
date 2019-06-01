@@ -16,6 +16,6 @@ public class Role {
     private String id;
     @Column(unique = true)
     private String role;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private List<Permission> permission;
 }
