@@ -8,8 +8,19 @@
 4. [使用反射获取注解信息](./Spring/4_annotation.md)
 5. [利用mybatis操作数据库的基本使用](./Spring/5_mybatis.md)
 
-## SpringBoot
+# Servlet
+
+1. [Hello World](./Servlet/1_servlet.md)
+
+## Spring-Boot
+
+## 简单基础部分
 
 1. [SpringBoot中使用Mybatis](./SpringBoot/1_springboot_mybatis.md)
 2. [SpringBoot编写前端](./SpringBoot/2_springboot_thymeleaf.md)
+
+## J2EE
+
+1. [SpringBoot中使用JPA](./J2EE/1_springboot_jpa.md)
+2. [使用JPA进行多表联立查询](./J2EE/2_day.md)
 
